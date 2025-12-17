@@ -14,12 +14,14 @@ const groq = new Groq({
 // Middleware
 
 app.use(cors({
-  origin: [
-    "http://localhost:3000",
-    "https://shimmering-dango-5a863e.netlify.app/"
-  ],
+  origin: "https://shimmering-dango-5a863e.netlify.app",
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true
 }));
+
+// VERY IMPORTANT — allow preflight
+app.options("*", cors());
 app.use(express.json());
 
 // Code explanation endpoint
