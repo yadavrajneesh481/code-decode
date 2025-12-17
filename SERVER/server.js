@@ -16,7 +16,7 @@ const groq = new Groq({
 app.use(cors({
   origin: [
     "http://localhost:3000",
-    "https://YOUR_NETLIFY_SITE.netlify.app"
+    "https://shimmering-dango-5a863e.netlify.app/"
   ],
   credentials: true
 }));
