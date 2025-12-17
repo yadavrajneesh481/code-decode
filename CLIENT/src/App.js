@@ -4,12 +4,15 @@ import "./App.css";
 import ReactMarkdown from "react-markdown";
 import Editor from "@monaco-editor/react";
 
+
+
 function App() {
     const [codeInput, setCodeInput] = useState("// Write your code here...");
     const [response, setResponse] = useState("");
     const [loading, setLoading] = useState(false);
     const [language, setLanguage] = useState("javascript");
     const editorRef = useRef(null);
+    
 
     const handleEditorDidMount = (editor, monaco) => {
         editorRef.current = editor;
@@ -43,20 +46,21 @@ function App() {
 
     const handleExplain = async () => {
         setLoading(true);
+        
+        const API = import.meta.env.VITE_API_BASE_URL;
 
         try {
-            const res = await axios.post(
-                "http://localhost:5000/api/explain/code",
-                { code: codeInput },
-                {
-                    headers: {
-                        "Content-Type": "application/json"
-                    }
-                }
-            );
-
-            setResponse(res.data.output);
-        } catch (error) {
+          const res = await axios.post(
+            `${API}/api/explain/code`,
+            { code: codeInput },
+            {
+              headers: {
+                "Content-Type": "application/json"
+              }
+            }
+          );
+        }
+         catch (error) {
             console.error("Error:", error);
             setResponse("⚠ Error: Failed to get AI response");
         }
