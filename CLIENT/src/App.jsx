@@ -55,7 +55,12 @@ function App() {
             { headers: { "Content-Type": "application/json" } }
           );
       
-          setResponse(res.data.output);
+          setResponse(
+            res.data?.output ||
+            res.data?.explanation ||
+            "⚠ No explanation returned"
+          );
+          
         } catch (error) {
           console.error("Error:", error);
           setResponse("⚠ Error: Failed to get AI response");
