@@ -43,30 +43,28 @@ function App() {
     const handleEditorChange = (value) => {
         setCodeInput(value || "");
     };
-
     const handleExplain = async () => {
         setLoading(true);
-        
+      
         const API = import.meta.env.VITE_API_BASE_URL;
-
+        console.log("API =", API);
+      
         try {
           const res = await axios.post(
             `${API}/api/explain/code`,
             { code: codeInput },
-            {
-              headers: {
-                "Content-Type": "application/json"
-              }
-            }
+            { headers: { "Content-Type": "application/json" } }
           );
+      
+          setResponse(res.data.explanation || res.data);
+        } catch (error) {
+          console.error("Error:", error);
+          setResponse("⚠ Error: Failed to get AI response");
+        } finally {
+          setLoading(false);
         }
-         catch (error) {
-            console.error("Error:", error);
-            setResponse("⚠ Error: Failed to get AI response");
-        }
-
-        setLoading(false);
-    };
+      };
+      
 
     const languages = [
         { value: "javascript", label: "JavaScript" },
